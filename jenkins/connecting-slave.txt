@@ -1,2 +1,18 @@
+To Download the agent.jar
 curl -sO http://140.238.245.102:8080/jnlpJars/agent.jar
+
+Add the below to start.sh file 
 java -jar agent.jar -jnlpUrl http://140.238.245.102:8080/manage/computer/slave1/jenkins-agent.jnlp -secret ebc1bff1c744e1edf2047f94aa16dc128dd5a82f89eafc0b1d853fd972f57acb -workDir "/var/jenkins_home"
+
+------------------------------>
+To Start the file in background
+>start.sh &
+
+To check if the jobs is running in background
+>Jobs
+
+To find the process id - look for PID with the CMD as java
+>ps
+
+To klll the process
+>kill -9 <PID>
