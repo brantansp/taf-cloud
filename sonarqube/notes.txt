@@ -1,0 +1,1 @@
+Do not modify the docker-compose file. Run as it is. Volume mounting has some permission issue if mapped to host os.
