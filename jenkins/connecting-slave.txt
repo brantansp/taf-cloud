@@ -1,0 +1,2 @@
+curl -sO http://140.238.245.102:8080/jnlpJars/agent.jar
+java -jar agent.jar -jnlpUrl http://140.238.245.102:8080/manage/computer/slave1/jenkins-agent.jnlp -secret ebc1bff1c744e1edf2047f94aa16dc128dd5a82f89eafc0b1d853fd972f57acb -workDir "/var/jenkins_home"
