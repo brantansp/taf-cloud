@@ -1,1 +1,5 @@
 apt install openjdk-11-jdk
+apt install git
+apt install maven
+apt install docker.io
+apt install docker-compose
