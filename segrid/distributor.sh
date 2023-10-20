@@ -1,0 +1,1 @@
+java -jar selenium-server.jar distributor --publish-events tcp://140.238.245.102:4442 --subscribe-events tcp://140.238.245.102:4443 --sessions http://140.238.245.102:5556 --sessionqueue http://140.238.245.102:5559 --port 5553 --bind-bus false
