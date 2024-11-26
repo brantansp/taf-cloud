@@ -1,0 +1,75 @@
+x-logging: &logging
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "256m"
+
+x-restart-policy: &restart
+  restart: unless-stopped
+
+x-labels: &labels
+  labels:
+    org.jdi-qasp-ml.project: "jdi-qasp-ml"
+    org.jdi-qasp-ml.version_label: "${JDI_VERSION_LABEL:-latest}"
+
+services:
+  selenoid:
+    image: "aerokube/selenoid:latest"
+    volumes:
+      - ".:/etc/selenoid"
+      - "./target:/output"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./target:/opt/selenoid/video"
+    environment:
+      - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/target"
+    command:
+      - "-conf"
+      - "/etc/selenoid/browsers.json"
+      - "-video-output-dir"
+      - "/opt/selenoid/video"
+      - "-container-network"
+      - "${JDI_DEFAULT_NETWORK_NAME:-jdi-qasp-ml-default}"
+      - "-limit"
+      - "${SELENOID_PARALLEL_SESSIONS_COUNT:?set it to the number of parallel running threads supported by your processor (-2 optionally)}"
+    <<: [*restart, *labels]
+
+  api:
+    image: "ghcr.io/jdi-testing/jdi-qasp-ml:latest"
+    command: uvicorn app.main:api --host 0.0.0.0 --port 5050
+    depends_on:
+      - selenoid
+      - celery
+      - redis
+      - mongodb
+    ports:
+      - "${APP_EXPOSE_PORT:-5050}:5050"
+    environment:
+      - SELENOID_PARALLEL_SESSIONS_COUNT=$SELENOID_PARALLEL_SESSIONS_COUNT
+    <<: [*logging, *restart, *labels]
+
+  celery:
+    image: "ghcr.io/jdi-testing/jdi-qasp-ml:latest"
+    command: bash -c "bash start_celery.sh"
+    depends_on:
+      - redis
+    <<: [*logging, *restart, *labels]
+
+  redis:
+    image: "redis:alpine"
+    command: redis-server --maxmemory 2048mb --maxmemory-policy allkeys-lru
+    <<: [*logging, *restart, *labels]
+
+  mongodb:
+    image: mongo:5.0
+    volumes:
+      - mongo-data:/data/db
+    <<: [*logging, *restart, *labels]
+
+networks:
+  default:
+    name: ${JDI_DEFAULT_NETWORK_NAME:-jdi-qasp-ml-default}
+    <<: *labels
+
+volumes:
+  mongo-data:
+    <<: *labels
