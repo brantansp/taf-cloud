@@ -1,0 +1,1 @@
+sh -i private.pem ubuntu@144.24.120.174
