@@ -2,7 +2,7 @@ To Download the agent.jar
 curl -sO http://140.238.245.102:8080/jnlpJars/agent.jar
 
 Add the below to start.sh file 
-java -jar agent.jar -jnlpUrl http://140.238.245.102:8080/manage/computer/slave1/jenkins-agent.jnlp -secret ebc1bff1c744e1edf2047f94aa16dc128dd5a82f89eafc0b1d853fd972f57acb -workDir "/var/jenkins_home"
+java -jar agent.jar -url http://141.148.199.100:8080/ -secret 08addc7984ca6d816c7d20b233cde473ecf708c25ca52de12f00c3e36afae6a4 -name pi -webSocket -workDir "/home/jenkins/"
 
 ------------------------------>
 To Start the file in background
