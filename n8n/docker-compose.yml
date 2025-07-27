@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  n8n:
+    image: n8nio/n8n
+    container_name: n8n
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      # You can add more env variables here (e.g. for DB or auth)
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: unless-stopped
