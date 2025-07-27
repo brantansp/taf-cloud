@@ -1,2 +1,2 @@
-ssh -i private.pem ubuntu@144.24.120.174
-ssh -i private.pem -o ServerAliveInterval=60 -o ServerAliveCountMax=10000 ubuntu@144.24.120.174
+ssh -i private.pem ubuntu@141.148.199.100
+ssh -i private.pem -o ServerAliveInterval=60 -o ServerAliveCountMax=10000 ubuntu@141.148.199.100
