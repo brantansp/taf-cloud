@@ -1,0 +1,11 @@
+Install Node | install npm | install pm2
+
+npm install -g pm2
+
+pm2 start n8n --name n8n
+
+pm2 status
+
+pm2 startup [sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ubuntu --hp /home/ubuntu]
+
+pm2 save

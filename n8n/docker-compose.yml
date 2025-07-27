@@ -2,15 +2,15 @@ version: '3.8'
 
 services:
   n8n:
-    image: n8nio/n8n
+    image: n8nio/n8n:latest
     container_name: n8n
+    restart: always
     ports:
       - "5678:5678"
     environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=mightywarrior
       - N8N_HOST=0.0.0.0
-      - N8N_PORT=5678
-      - N8N_PROTOCOL=http
-      # You can add more env variables here (e.g. for DB or auth)
     volumes:
-      - ./n8n_data:/home/node/.n8n
-    restart: unless-stopped
+      - ./data:/home/node/.n8n
